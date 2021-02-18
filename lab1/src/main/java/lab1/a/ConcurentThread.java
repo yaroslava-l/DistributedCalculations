@@ -12,6 +12,7 @@ public class ConcurentThread {
         thread1 = new Thread(() -> {
             while (true) {
                 {
+                    synchronized (slider){
                     int slidervalue = slider.getValue();
                     while (slidervalue != 10) {
                         if (slidervalue > 10)
@@ -24,12 +25,13 @@ public class ConcurentThread {
                             e.printStackTrace();
                         }}
 
-                }
+                }}
             }
         }, "Threead1");
         thread2 = new Thread(() -> {
             while (true) {
                 {
+                    synchronized (slider){
                     int slidervalue = slider.getValue();
                     while (slidervalue != 90) {
                         if (slidervalue > 90)
@@ -41,7 +43,7 @@ public class ConcurentThread {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }
+                    }}
 
                 }
             }
@@ -52,9 +54,11 @@ public class ConcurentThread {
         thread2.start();
     }
 
-    public String getPrior1(){Integer threadprior=thread1.getPriority();
+    public String getPrior1(){
+        Integer threadprior=thread1.getPriority();
         return threadprior.toString();};
-    public String getPrior2(){Integer threadprior=thread2.getPriority();
+    public String getPrior2(){
+        Integer threadprior=thread2.getPriority();
         return threadprior.toString();};
     public void inc1Priority() { thread1.setPriority(thread1.getPriority()+1); }
     public void dec1Priority() { thread1.setPriority(thread1.getPriority()-1); }
